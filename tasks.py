@@ -1,6 +1,8 @@
+# https://github.com/netology-code/py-homeworks-db/tree/master/dml
 # [SQLPY-49] 4. Музыкальный сервис
 # к лекции «Select-запросы, выборки из одной таблицы»
 # ДЗ-2 Написать SELECT-запросы и вывести информацию
+# https://github.com/kievsan/SQLPY-49_Task4_Select
 
 
 def get_tasks():
