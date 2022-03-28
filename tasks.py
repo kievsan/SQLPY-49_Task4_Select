@@ -9,7 +9,7 @@ def get_tasks():
     select_list = [
         {'task': '--1. название и год выхода альбомов, вышедших в 2018 году',
          'select':
-            """
+             """
             SELECT album_name Альбомы, 
                     album_release_year год_выхода
             FROM music_albums
@@ -17,46 +17,51 @@ def get_tasks():
         """},
         {'task': '--2. название и продолжительность самого длительного трека',
          'select':
-            """
+             """
             SELECT track_name Треки, 
                     track_duration Длит_сек
             FROM music_tracks
             ORDER BY Длит_сек DESC 
-            LIMIT 1
+            LIMIT 1 ;
         """},
         {'task': '--3. название треков, продолжительность которых не менее 3,5 минуты',
          'select':
-            """
+             """
             SELECT track_name Треки
             FROM music_tracks
             WHERE track_duration > 210 ;
         """},
         {'task': '--4. названия сборников, вышедших в период с 2018 по 2020 год включительно',
          'select':
-            """
+             """
             SELECT collection_name Сборники
             FROM music_collections
-            WHERE collection_release_year <= 2020 
-                AND collection_release_year >= 2018 ;
+            WHERE collection_release_year BETWEEN 2018 AND 2020  ;
         """},
         {'task': '--5. исполнители, чье имя состоит из 1 слова',
          'select':
-            """
-            SELECT artist_name Исполнители
-                FROM music_artists
-                WHERE position(' ' IN trim(artist_name)) = 0 ;
-                --WHERE array_length(regexp_split_to_array(artist_name, '\\s+'), 1) = 1 ;
-            """},
-        {'task': "--6. название треков, которые содержат слово 'мой'/'my'",
+             """
+            SELECT artist_name Исполнители 
+            FROM music_artists  
+            WHERE artist_name NOT LIKE '%% %%' ;
+            --
+            --WHERE position(' ' IN trim(artist_name)) = 0 ;
+            --WHERE array_length(regexp_split_to_array(artist_name, '\\s+'), 1) = 1 ;
+        """},
+        {'task': "--6. названия треков, которые содержат слово 'мой'/'my'",
          'select':
-            """
+             """
             SELECT track_name Треки
             FROM music_tracks
             WHERE ( SELECT COUNT(*) 
                     FROM ( SELECT word 
                             FROM regexp_split_to_table(track_name, '\\s+') AS word
                             WHERE word = 'мой' OR word = 'my' ) AS my
-                    ) > 0
+                    ) > 0 ;
+            --
+            --WHERE track_name ILIKE '%%my%%' OR track_name ILIKE '%%мой%%' ;  
+            --pas comme il faut! ('Немой', 'зимой мойша домой трек' и т.п.)
         """}
     ]
     return select_list
+
